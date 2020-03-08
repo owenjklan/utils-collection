@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# A simple shell script to make boiler plate for C/C++ include
+# files just a little less laborious.
+
+if [ $# -lt 1 ]; then
+    echo "USAGE: $0 file1 ... filen"
+    echo ""
+    echo "Create header empty header files that contain the minimal 'include guard'"
+    exit 1
+fi
+
+for FNAME in $@;
+do
+    echo "Creating $FNAME..."
+    PARTS=`echo $FNAME | awk -F'.' '{print $1}'`
+    GUARD="__`echo $PARTS | tr '[:lower:]' '[:upper:]'`_H__"
+    echo "#ifndef $GUARD" > $FNAME
+    echo "#define $GUARD" >> $FNAME
+    echo "" >> $FNAME
+    echo "#endif  /* End $GUARD */" >> $FNAME
+done

@@ -1,0 +1,56 @@
+#!/bin/bash
+OPTIONS=":w:d:hastn"
+WRAPCHAR=""
+SEPCHAR=","
+OUTPUT=""
+STARTCHAR="("
+ENDCHAR=")"
+
+function help {
+    echo -e "Usage:\n"
+    echo -e "$0 -astnh -w wrap_character -d delimiter"
+    exit 1
+}
+
+while getopts $OPTIONS opt; do
+    case $opt in
+      a)
+	STARTCHAR='['
+	ENDCHAR=']'
+	;;
+      h)
+	help
+	;;
+      n)
+	STARTCHAR=""
+	ENDCHAR=""
+	;;
+      s)
+	STARTCHAR='{'
+	ENDCHAR='}'
+	;;
+      t)
+	STARTCHAR='('
+	ENDCHAR=')'
+	;;
+      w)
+	WRAPCHAR=$OPTARG
+	;;
+      d)
+	SEPCHAR=$OPTARG
+	;;
+     \?)
+	help
+	;;
+    esac
+done
+
+OUTPUT=$OUTPUT`echo -n "$STARTCHAR"`
+while read line
+do
+   OUTPUT=$OUTPUT`echo -n "$WRAPCHAR$line$WRAPCHAR$SEPCHAR"`
+done
+
+TEMPOUT=`echo $OUTPUT | sed -e "s/$SEPCHAR$//"`
+OUTPUT=$TEMPOUT`echo -n "$ENDCHAR"`
+echo $OUTPUT

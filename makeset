@@ -9,39 +9,50 @@ ENDCHAR=")"
 function help {
     echo -e "Usage:\n"
     echo -e "$0 -astnh -w wrap_character -d delimiter"
+    echo
+    echo -e "Output modes"
+    echo -e " Flag  Mode           Example"
+    echo -e "  -a   array           [1,2,3,4]"
+    echo -e "  -n   none            1,2,3,4"
+    echo -e "  -s   set             {1,2,3,4}"
+    echo -e "  -t   tuple           (1,2,3,4)"
+    echo ""
+    echo "The 'wrap_character' specifies the character to use before and after each element of the output."
+    echo "The 'delimiter' specifies the character to use between each element of the output."
+
     exit 1
 }
 
 while getopts $OPTIONS opt; do
     case $opt in
       a)
-	STARTCHAR='['
-	ENDCHAR=']'
-	;;
+    STARTCHAR='['
+    ENDCHAR=']'
+    ;;
       h)
-	help
-	;;
+    help
+    ;;
       n)
-	STARTCHAR=""
-	ENDCHAR=""
-	;;
+    STARTCHAR=""
+    ENDCHAR=""
+    ;;
       s)
-	STARTCHAR='{'
-	ENDCHAR='}'
-	;;
+    STARTCHAR='{'
+    ENDCHAR='}'
+    ;;
       t)
-	STARTCHAR='('
-	ENDCHAR=')'
-	;;
+    STARTCHAR='('
+    ENDCHAR=')'
+    ;;
       w)
-	WRAPCHAR=$OPTARG
-	;;
+    WRAPCHAR=$OPTARG
+    ;;
       d)
-	SEPCHAR=$OPTARG
-	;;
+    SEPCHAR=$OPTARG
+    ;;
      \?)
-	help
-	;;
+    help
+    ;;
     esac
 done
 
